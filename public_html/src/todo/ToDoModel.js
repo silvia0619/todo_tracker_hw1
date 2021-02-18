@@ -29,6 +29,23 @@ export default class ToDoModel {
     }
 
     /**
+     * liftToTop
+     * 
+     * This function promote the selected list to the top of the list of lists.
+     * 
+     * @param {*} listId The index of the list.
+     */
+    liftToTop(listId){
+        this.currentList = this.toDoLists[listId];
+        this.toDoLists.splice(listId, 1);
+        this.toDoLists.unshift(this.currentList);
+        for (let i = 0; i < this.toDoLists.length; i++){
+            this.toDoLists[i].id = i;
+        }
+        this.view.refreshLists(this.toDoLists);
+    }
+
+    /**
      * addItemToCurrentList
      * 
      * This function adds the itemToAdd argument to the current list being edited.
