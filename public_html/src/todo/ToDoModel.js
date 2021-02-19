@@ -35,11 +35,11 @@ export default class ToDoModel {
      * 
      * @param {*} listId The index of the list.
      */
-    liftToTop(listId){
+    liftToTop(listId) {
         this.currentList = this.toDoLists[listId];
         this.toDoLists.splice(listId, 1);
         this.toDoLists.unshift(this.currentList);
-        for (let i = 0; i < this.toDoLists.length; i++){
+        for (let i = 0; i < this.toDoLists.length; i++) {
             this.toDoLists[i].id = i;
         }
         this.view.refreshLists(this.toDoLists);
@@ -155,7 +155,7 @@ export default class ToDoModel {
         if (this.tps.hasTransactionToRedo()) {
             this.tps.doTransaction();
         }
-    }   
+    }
 
     /**
      * Remove the itemToRemove from the current list and refresh.
@@ -169,16 +169,57 @@ export default class ToDoModel {
      * Finds and then removes the current list.
      */
     removeCurrentList() {
-        let indexOfList = -1;
-        for (let i = 0; (i < this.toDoLists.length) && (indexOfList < 0); i++) {
-            if (this.toDoLists[i].id === this.currentList.id) {
-                indexOfList = i;
+        var theList = this.toDoLists;
+        var theCurrentList = this.currentList;
+        var theView = this.view;
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("delete-list-button");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        var confirm = document.getElementById("confirm");
+        var cancel = document.getElementById("cancel");
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        confirm.onclick = function () {
+            let indexOfList = -1;
+            for (let i = 0; (i < theList.length) && (indexOfList < 0); i++) {
+                if (theList[i].id === theCurrentList.id) {
+                    indexOfList = i;
+                }
+            }
+            theList.splice(indexOfList, 1);
+            theCurrentList = null;
+            theView.clearItemsList();
+            theView.refreshLists(theList);
+            modal.style.display = "none";
+            console.log("theList", theList);
+        }
+
+        cancel.onclick = function () {
+            modal.style.display = "none";
+        }
+
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
         }
-        this.toDoLists.splice(indexOfList, 1);
-        this.currentList = null;
-        this.view.clearItemsList();
-        this.view.refreshLists(this.toDoLists);
     }
 
     // WE NEED THE VIEW TO UPDATE WHEN DATA CHANGES.
@@ -193,5 +234,5 @@ export default class ToDoModel {
         if (this.tps.hasTransactionToUndo()) {
             this.tps.undoTransaction();
         }
-    } 
+    }
 }

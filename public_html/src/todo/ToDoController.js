@@ -29,6 +29,10 @@ export default class ToDoController {
         document.getElementById("add-item-button").onmousedown = function() {
             appModel.addNewItemTransaction();
         }  
+        console.log(document.getElementsByClassName("task-col"));
+        document.getElementsByClassName("task-col").onClick = function() {
+            console.log("clicked");
+        }
     }
     
     // PROVIDES THE RESPONSE TO WHEN A USER CLICKS ON A LIST TO LOAD
