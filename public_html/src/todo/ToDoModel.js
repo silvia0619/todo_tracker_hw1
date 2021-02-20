@@ -36,6 +36,7 @@ export default class ToDoModel {
      * @param {*} listId The index of the list.
      */
     liftToTop(listId) {
+        console.log("before the liftToTop started", this.toDoLists);
         this.currentList = this.toDoLists[listId];
         this.toDoLists.splice(listId, 1);
         this.toDoLists.unshift(this.currentList);
@@ -169,10 +170,24 @@ export default class ToDoModel {
      * Finds and then removes the current list.
      */
     removeCurrentList() {
-        var theList = this.toDoLists;
-        var theCurrentList = this.currentList;
-        var theView = this.view;
-        // Get the modal
+        const handleDelete = async () => {
+            let indexOfList = -1;
+            for (let i = 0; (i < this.toDoLists.length) && (indexOfList < 0); i++) {
+                if (this.toDoLists[i].id === this.currentList.id) {
+                    indexOfList = i;
+                }
+            }
+            this.toDoLists.splice(indexOfList, 1);
+            for (let i = 0; i < this.toDoLists.length; i++) {
+                this.toDoLists[i].id = i;
+            }
+            this.currentList = null;
+            this.view.clearItemsList();
+            this.view.refreshLists(this.toDoLists);
+            modal.style.display = "none";
+            console.log("this.toDoLists", this.toDoLists);
+        }
+    
         var modal = document.getElementById("myModal");
 
         // Get the button that opens the modal
@@ -195,18 +210,7 @@ export default class ToDoModel {
         }
 
         confirm.onclick = function () {
-            let indexOfList = -1;
-            for (let i = 0; (i < theList.length) && (indexOfList < 0); i++) {
-                if (theList[i].id === theCurrentList.id) {
-                    indexOfList = i;
-                }
-            }
-            theList.splice(indexOfList, 1);
-            theCurrentList = null;
-            theView.clearItemsList();
-            theView.refreshLists(theList);
-            modal.style.display = "none";
-            console.log("theList", theList);
+            handleDelete();
         }
 
         cancel.onclick = function () {
