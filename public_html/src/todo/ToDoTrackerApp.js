@@ -48,7 +48,7 @@ export class ToDoTrackerApp {
     }
 }
 
-window.onload = function() {
+window.onload = function () {
     // MAKE THE APP AND LAUNCH IT
     let app = new ToDoTrackerApp();
     app.launch("./src/test/TestToDoLists.json");

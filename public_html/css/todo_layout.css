@@ -44,9 +44,11 @@
 }
 
 .list-item-card {
-    height: 5%;
+    height: 1.5rem;
     display: flex;
     flex-direction: row;
+    /*border: 3px;*/
+    /*padding: 7px;*/
 }
 
 .task-col {

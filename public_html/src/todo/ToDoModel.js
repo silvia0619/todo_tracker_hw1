@@ -26,25 +26,7 @@ export default class ToDoModel {
 
         // WE'LL USE THIS TO ASSIGN ID NUMBERS TO EVERY LIST ITEM
         this.nextListItemId = 0;
-    }
-
-    /**
-     * liftToTop
-     * 
-     * This function promote the selected list to the top of the list of lists.
-     * 
-     * @param {*} listId The index of the list.
-     */
-    liftToTop(listId) {
-        console.log("before the liftToTop started", this.toDoLists);
-        this.currentList = this.toDoLists[listId];
-        this.toDoLists.splice(listId, 1);
-        this.toDoLists.unshift(this.currentList);
-        for (let i = 0; i < this.toDoLists.length; i++) {
-            this.toDoLists[i].id = i;
-        }
-        this.view.refreshLists(this.toDoLists);
-    }
+    }s
 
     /**
      * addItemToCurrentList
@@ -147,6 +129,13 @@ export default class ToDoModel {
             this.currentList = listToLoad;
             this.view.viewList(this.currentList);
         }
+        var selectedList = this.toDoLists[listIndex];
+        this.toDoLists.splice(listIndex, 1);
+        this.toDoLists.unshift(selectedList);
+        //for (let i = 0; i < this.toDoLists.length; i++) {
+        //    this.toDoLists[i].id = i;
+        //}
+        this.view.refreshLists(this.toDoLists);
     }
 
     /**
@@ -187,7 +176,7 @@ export default class ToDoModel {
             modal.style.display = "none";
             console.log("this.toDoLists", this.toDoLists);
         }
-    
+
         var modal = document.getElementById("myModal");
 
         // Get the button that opens the modal
