@@ -56,7 +56,6 @@ export default class ToDoView {
     viewList(list) {
         // WE'LL BE ADDING THE LIST ITEMS TO OUR WORKSPACE
         let itemsListDiv = document.getElementById("todo-list-items-div");
-
         // GET RID OF ALL THE ITEMS
         this.clearItemsList();
 
@@ -77,7 +76,11 @@ export default class ToDoView {
             itemsListDiv.innerHTML += listItemElement;
         }
         let thisController = this.controller;
-
+        //edit task!!
+        document.addEventListener('click', function (event) {
+            console.log("inside of the todoView");
+            thisController.handleEditTask(event.target);
+        });
     }
 
 
