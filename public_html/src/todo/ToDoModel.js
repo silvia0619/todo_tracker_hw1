@@ -66,6 +66,9 @@ export default class ToDoModel {
         }
     }
 
+    /**
+     * setModelDescription(theId, newTask)
+     */
     setModelDescription(theId, newTask) {
         for( var i = 0; i < this.currentList.items.length; i++){
             if (this.currentList.items[i].id == theId){
@@ -73,19 +76,37 @@ export default class ToDoModel {
             }
         }
     }
+
+    /**
+     * setModelDueDate(theId, newDueDate)
+     */
     setModelDueDate(theId, newDueDate) {
-        console.log("theNode", this.currentList.items);
         for( var i = 0; i < this.currentList.items.length; i++){
             if (this.currentList.items[i].id == theId){
                 this.currentList.items[i].setDueDate(newDueDate);
             }
         }
     }
+
+    /**
+     * setModelStatus(theId, newStatus)
+     */
     setModelStatus(theId, newStatus) {
-        console.log("theNode", this.currentList.items);
         for( var i = 0; i < this.currentList.items.length; i++){
             if (this.currentList.items[i].id == theId){
                 this.currentList.items[i].setStatus(newStatus);
+            }
+        }
+    }
+
+    /**
+     * handleRemoveItem(theId)
+     */
+    handleRemoveItem(theId) {
+        for( var i = 0; i < this.currentList.items.length; i++){
+            if (this.currentList.items[i].id == theId){
+                console.log("did it find????", this.currentList.items[i]);
+                this.removeItem(this.currentList.items[i]);
             }
         }
     }

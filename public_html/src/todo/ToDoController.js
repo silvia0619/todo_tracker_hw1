@@ -41,7 +41,7 @@ export default class ToDoController {
     handleEditTask(theTarget) {
         var theModel = this.model;
         const pureId = theTarget.parentNode.id.split('-').pop();
-        if (theTarget.className == "task-col") {
+        if (theTarget.className == "task-col") {                    //handle task
 
             //make an input box w/ value
             var taskBox = document.createElement("input");
@@ -63,7 +63,7 @@ export default class ToDoController {
                 }
             });
         }
-        else if (theTarget.className == "due-date-col") {
+        else if (theTarget.className == "due-date-col") {           //handle due date
             //make an input box w/ value
             var dueDateBox = document.createElement("input");
             dueDateBox.setAttribute("class", "due-date-inputbox");
@@ -83,12 +83,11 @@ export default class ToDoController {
                     theModel.setModelDueDate(pureId, dueDateBox.value);
                 }
             });
-        } else if (theTarget.className == "status-col") { //잘 안됨.....
-            console.log("FIRST CLICK");
+        } else if (theTarget.className == "status-col") {           //handle status
             //make an input box w/ value
             var selectBox = document.createElement("select");
             selectBox.setAttribute("class", "status-selectbox");
-            selectBox.setAttribute("id", "seletStatus");
+            selectBox.setAttribute("id", "selectStatus");
 
             //add two options
             var optComplete = document.createElement("option");
@@ -104,26 +103,25 @@ export default class ToDoController {
 
             //clicked outside
             document.addEventListener('click', function (event) {
-                console.log("SECOND CLICK");
                 if (event.target !== selectBox) {
-                    if(document.getElementById("selectStatus") !== null) {
-                        console.log("NOT NULL");
-                        var selectElement = document.getElementById("selectStatus").value;
-                        theTarget.innerHTML = selectElement;
-                        console.log("the value", selectElement);
-                        selectBox.replaceWith(theTarget);
-                        //set
-                        theModel.setModelStatus(pureId, dueDateBox.value);
-                    }else{
-                        console.log("IS NULL");
-                        selectBox.replaceWith(theTarget);
-                    }
+                    selectBox.replaceWith(theTarget);
+                    theTarget.innerHTML = selectBox.value;
+
+                    //set
+                    theModel.setModelStatus(pureId, selectBox.value);
                 }
             });
-        } else {
-            //handle three up down delete
+        } else if (theTarget.className == "list-item-control material-icons") {    //handle three up down delete
+            const idForIcons = theTarget.parentNode.parentNode.id.split('-').pop();
+            if(theTarget.innerHTML == "keyboard_arrow_up"){
+                console.log("keyboard_arrow_up");
+
+            }else if(theTarget.innerHTML == "keyboard_arrow_down") {
+                console.log("keyboard_arrow_down");
+
+            }else if(theTarget.innerHTML == "close") {
+                theModel.handleRemoveItem(idForIcons);
+            }
         }
-
-
     }
 }
