@@ -33,6 +33,7 @@
     background-color: var(--swatch-complement);
     color: rgb(233,237,240);
     overflow: auto;
+    overflow-x: hidden;
 }
 
 #workspace {
@@ -65,6 +66,10 @@
 .todo_button {
     cursor:pointer;
     background-color: var(--swatch-complement);
+}
+.highlight {
+    background-color: #ffc819;
+    transition: 0.1s ease-in-out;
 }
 
 .todo_button:hover {

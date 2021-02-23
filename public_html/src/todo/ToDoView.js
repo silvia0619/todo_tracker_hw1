@@ -25,9 +25,7 @@ export default class ToDoView {
         let thisController = this.controller;
         listElement.onmousedown = function () {
             thisController.handleLoadList(newList.id);
-            //thisController.handleLiftToTop(newList.id);
         }
-
     }
 
     // REMOVES ALL THE LISTS FROM THE LEFT SIDEBAR
@@ -45,7 +43,6 @@ export default class ToDoView {
         // GET THE UI CONTROL WE WILL APPEND IT TO
         let listsElement = document.getElementById("todo-lists-list");
         listsElement.innerHTML = "";
-
         for (let i = 0; i < lists.length; i++) {
             let list = lists[i];
             this.appendNewListToView(list);
@@ -73,7 +70,35 @@ export default class ToDoView {
                 + " <div class='list-item-control'></div>"
                 + " <div class='list-item-control'></div>"
                 + "</div>";
-            itemsListDiv.innerHTML += listItemElement;
+            if(i == 0) {
+                itemsListDiv.innerHTML += "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
+                + "<div class='task-col'>" + listItem.description + "</div>"
+                + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
+                + "<div class='status-col'>" + listItem.status + "</div>"
+                + "<div class='list-controls-col'>"
+                + " <div class='list-item-control material-icons'></div>"
+                + " <div class='list-item-control material-icons'>keyboard_arrow_down</div>"
+                + " <div class='list-item-control material-icons'>close</div>"
+                + " <div class='list-item-control'></div>"
+                + " <div class='list-item-control'></div>"
+                + "</div>";
+
+            }else if(i == list.items.length - 1) {
+                itemsListDiv.innerHTML += "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
+                + "<div class='task-col'>" + listItem.description + "</div>"
+                + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
+                + "<div class='status-col'>" + listItem.status + "</div>"
+                + "<div class='list-controls-col'>"
+                + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
+                + " <div class='list-item-control material-icons'></div>"
+                + " <div class='list-item-control material-icons'>close</div>"
+                + " <div class='list-item-control'></div>"
+                + " <div class='list-item-control'></div>"
+                + "</div>";
+            }else {
+                itemsListDiv.innerHTML += listItemElement;
+            }
+            
         }
         let thisController = this.controller;
         //edit task!!

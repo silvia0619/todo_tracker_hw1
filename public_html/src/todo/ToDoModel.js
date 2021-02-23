@@ -26,7 +26,7 @@ export default class ToDoModel {
 
         // WE'LL USE THIS TO ASSIGN ID NUMBERS TO EVERY LIST ITEM
         this.nextListItemId = 0;
-    }s
+    }
 
     /**
      * addItemToCurrentList
@@ -70,8 +70,8 @@ export default class ToDoModel {
      * setModelDescription(theId, newTask)
      */
     setModelDescription(theId, newTask) {
-        for( var i = 0; i < this.currentList.items.length; i++){
-            if (this.currentList.items[i].id == theId){
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
                 this.currentList.items[i].setDescription(newTask);
             }
         }
@@ -81,8 +81,8 @@ export default class ToDoModel {
      * setModelDueDate(theId, newDueDate)
      */
     setModelDueDate(theId, newDueDate) {
-        for( var i = 0; i < this.currentList.items.length; i++){
-            if (this.currentList.items[i].id == theId){
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
                 this.currentList.items[i].setDueDate(newDueDate);
             }
         }
@@ -92,8 +92,8 @@ export default class ToDoModel {
      * setModelStatus(theId, newStatus)
      */
     setModelStatus(theId, newStatus) {
-        for( var i = 0; i < this.currentList.items.length; i++){
-            if (this.currentList.items[i].id == theId){
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
                 this.currentList.items[i].setStatus(newStatus);
             }
         }
@@ -103,11 +103,45 @@ export default class ToDoModel {
      * handleRemoveItem(theId)
      */
     handleRemoveItem(theId) {
-        for( var i = 0; i < this.currentList.items.length; i++){
-            if (this.currentList.items[i].id == theId){
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
                 console.log("did it find????", this.currentList.items[i]);
                 this.removeItem(this.currentList.items[i]);
             }
+        }
+    }
+
+    /**DOES NOT WORK PROPERLY
+     * moveUpItem(theId)
+     */
+    moveUpItem(theId) {
+        var theIndex; 
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
+                theIndex = i;
+            }
+        }
+        if(theIndex > 0){
+            this.currentList.items.splice(theIndex - 1, 2, this.currentList.items[theIndex], this.currentList.items[theIndex - 1]);
+            console.log(this.currentList.items);
+            this.view.viewList(this.currentList);
+        }
+    }
+
+    /**DOES NOT WORK PROPERLY
+     * moveDownItem(theId)
+     */
+    moveDownItem(theId) {
+        var theIndex; 
+        for (var i = 0; i < this.currentList.items.length; i++) {
+            if (this.currentList.items[i].id == theId) {
+                theIndex = i;
+            }
+        }
+        if(theIndex < this.currentList.items.length){
+            this.currentList.items.splice(theIndex, 2, this.currentList.items[theIndex + 1], this.currentList.items[theIndex]);
+            console.log(this.currentList.items);
+            this.view.viewList(this.currentList);
         }
     }
 
@@ -160,7 +194,7 @@ export default class ToDoModel {
         this.addItemToList(list, newItem);
     }
 
-    
+
 
     /**
      * Load the items for the listId list into the UI.

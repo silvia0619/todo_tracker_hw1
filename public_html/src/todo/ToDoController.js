@@ -114,10 +114,10 @@ export default class ToDoController {
         } else if (theTarget.className == "list-item-control material-icons") {    //handle three up down delete
             const idForIcons = theTarget.parentNode.parentNode.id.split('-').pop();
             if(theTarget.innerHTML == "keyboard_arrow_up"){
-                console.log("keyboard_arrow_up");
+                theModel.moveUpItem(idForIcons);
 
             }else if(theTarget.innerHTML == "keyboard_arrow_down") {
-                console.log("keyboard_arrow_down");
+                theModel.moveDownItem(idForIcons);
 
             }else if(theTarget.innerHTML == "close") {
                 theModel.handleRemoveItem(idForIcons);
