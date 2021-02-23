@@ -54,12 +54,21 @@
 .task-col {
     width:25%;
 }
+.task-inputbox{
+    width:25%;
+}
 
 .due-date-col {
     width:25%;
 }
+.due-date-inputbox {
+    width:25%;
+}
 
 .status-col {
+    width:25%
+}
+.status-selectbox{
     width:25%
 }
 

@@ -78,7 +78,6 @@ export default class ToDoView {
         let thisController = this.controller;
         //edit task!!
         document.addEventListener('click', function (event) {
-            console.log("inside of the todoView");
             thisController.handleEditTask(event.target);
         });
     }

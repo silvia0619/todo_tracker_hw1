@@ -39,38 +39,58 @@ export default class ToDoController {
     }
 
     handleEditTask(theTarget) {
-        console.log("????????????????", theTarget.className);
-        if(theTarget.className == "task-col") {
-            console.log("????????????????this is task-col");
+        var theModel = this.model;
+        const pureId = theTarget.parentNode.id.split('-').pop();
+        if (theTarget.className == "task-col") {
+
+            //make an input box w/ value
             var taskBox = document.createElement("input");
+            taskBox.setAttribute("class", "task-inputbox");
             taskBox.type = "text";
             taskBox.value = theTarget.innerHTML;
+
+            //replace 
             theTarget.replaceWith(taskBox);
+
+            //clicked outside
             document.addEventListener('click', function (event) {
-                console.log("inside of the todoController event here", event.target);
                 if (event.target !== taskBox) {
-                    var newTask = taskBox.value;
+                    theTarget.innerHTML = taskBox.value;
                     taskBox.replaceWith(theTarget);
-                    console.log('!!!!!!!!!!!!!!!newValue', newTask);
+
+                    //set
+                    theModel.setModelDescription(pureId, taskBox.value);
                 }
             });
-        }else if (theTarget.className == "due-date-col") {
-            console.log("????????????????this is due-date-col");
+        }
+        else if (theTarget.className == "due-date-col") {
+            //make an input box w/ value
             var dueDateBox = document.createElement("input");
+            dueDateBox.setAttribute("class", "due-date-inputbox");
             dueDateBox.type = "date";
             dueDateBox.value = theTarget.innerHTML;
+
+            //replace
             theTarget.replaceWith(dueDateBox);
+
+            //clicked outside
             document.addEventListener('click', function (event) {
-                console.log("inside of the todoController event here", event.target);
                 if (event.target !== dueDateBox) {
-                    var newDueDate = dueDateBox.value;
+                    theTarget.innerHTML = dueDateBox.value;
                     dueDateBox.replaceWith(theTarget);
-                    console.log('!!!!!!!!!!!!!!!newValue', newDueDate);
+
+                    //set
+                    theModel.setModelDueDate(pureId, dueDateBox.value);
                 }
             });
-        }else if (theTarget.className == "status-col") {
-            console.log("????????????????this is due-date-col");
+        } else if (theTarget.className == "status-col") { //잘 안됨.....
+            console.log("FIRST CLICK");
+            //make an input box w/ value
             var selectBox = document.createElement("select");
+            selectBox.setAttribute("class", "status-selectbox");
+            selectBox.setAttribute("id", "seletStatus");
+
+            //add two options
             var optComplete = document.createElement("option");
             optComplete.text = "complete"
             var optIncomplete = document.createElement("option");
@@ -78,19 +98,32 @@ export default class ToDoController {
             selectBox.options[0] = optComplete;
             selectBox.options[1] = optIncomplete;
             selectBox.value = theTarget.innerHTML;
+
+            //replace
             theTarget.replaceWith(selectBox);
+
+            //clicked outside
             document.addEventListener('click', function (event) {
-                console.log("inside of the todoController event here", event.target);
+                console.log("SECOND CLICK");
                 if (event.target !== selectBox) {
-                    var newStatus = selectBox.value;
-                    selectBox.replaceWith(theTarget);
-                    console.log('!!!!!!!!!!!!!!!newStatus', newStatus);
+                    if(document.getElementById("selectStatus") !== null) {
+                        console.log("NOT NULL");
+                        var selectElement = document.getElementById("selectStatus").value;
+                        theTarget.innerHTML = selectElement;
+                        console.log("the value", selectElement);
+                        selectBox.replaceWith(theTarget);
+                        //set
+                        theModel.setModelStatus(pureId, dueDateBox.value);
+                    }else{
+                        console.log("IS NULL");
+                        selectBox.replaceWith(theTarget);
+                    }
                 }
             });
-        }else {
-
+        } else {
+            //handle three up down delete
         }
-        
-        
+
+
     }
 }

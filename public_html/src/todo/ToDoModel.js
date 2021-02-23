@@ -66,6 +66,30 @@ export default class ToDoModel {
         }
     }
 
+    setModelDescription(theId, newTask) {
+        for( var i = 0; i < this.currentList.items.length; i++){
+            if (this.currentList.items[i].id == theId){
+                this.currentList.items[i].setDescription(newTask);
+            }
+        }
+    }
+    setModelDueDate(theId, newDueDate) {
+        console.log("theNode", this.currentList.items);
+        for( var i = 0; i < this.currentList.items.length; i++){
+            if (this.currentList.items[i].id == theId){
+                this.currentList.items[i].setDueDate(newDueDate);
+            }
+        }
+    }
+    setModelStatus(theId, newStatus) {
+        console.log("theNode", this.currentList.items);
+        for( var i = 0; i < this.currentList.items.length; i++){
+            if (this.currentList.items[i].id == theId){
+                this.currentList.items[i].setStatus(newStatus);
+            }
+        }
+    }
+
     /**
      * addNewItemTransaction
      * 
@@ -114,6 +138,8 @@ export default class ToDoModel {
         newItem.setCompleted(completed);
         this.addItemToList(list, newItem);
     }
+
+    
 
     /**
      * Load the items for the listId list into the UI.
