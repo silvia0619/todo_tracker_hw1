@@ -104,6 +104,11 @@ export default class ToDoController {
             //clicked outside
             document.addEventListener('click', function (event) {
                 if (event.target !== selectBox) {
+                    if(selectBox.value == "incomplete"){
+                        theTarget.setAttribute("id", "incomplete");
+                    }else{
+                        theTarget.setAttribute("id", "complete");
+                    }
                     selectBox.replaceWith(theTarget);
                     theTarget.innerHTML = selectBox.value;
 

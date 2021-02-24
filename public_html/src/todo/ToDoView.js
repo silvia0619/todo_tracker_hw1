@@ -59,10 +59,16 @@ export default class ToDoView {
         for (let i = 0; i < list.items.length; i++) {
             // NOW BUILD ALL THE LIST ITEMS
             let listItem = list.items[i];
+            var coloredStatus;
+            if(listItem.status == "incomplete"){
+                coloredStatus = "<div class='status-col' id='incomplete'>" + listItem.status + "</div>"
+            }else{
+                coloredStatus = "<div class='status-col' id='complete'>" + listItem.status + "</div>"
+            }
             let listItemElement = "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
                 + "<div class='task-col'>" + listItem.description + "</div>"
                 + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
-                + "<div class='status-col'>" + listItem.status + "</div>"
+                + coloredStatus
                 + "<div class='list-controls-col'>"
                 + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
                 + " <div class='list-item-control material-icons'>keyboard_arrow_down</div>"
@@ -74,7 +80,7 @@ export default class ToDoView {
                 itemsListDiv.innerHTML += "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
                 + "<div class='task-col'>" + listItem.description + "</div>"
                 + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
-                + "<div class='status-col'>" + listItem.status + "</div>"
+                + coloredStatus
                 + "<div class='list-controls-col'>"
                 + " <div class='list-item-control material-icons'></div>"
                 + " <div class='list-item-control material-icons'>keyboard_arrow_down</div>"
@@ -87,7 +93,7 @@ export default class ToDoView {
                 itemsListDiv.innerHTML += "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
                 + "<div class='task-col'>" + listItem.description + "</div>"
                 + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
-                + "<div class='status-col'>" + listItem.status + "</div>"
+                + coloredStatus
                 + "<div class='list-controls-col'>"
                 + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
                 + " <div class='list-item-control material-icons'></div>"
@@ -103,6 +109,7 @@ export default class ToDoView {
         let thisController = this.controller;
         //edit task!!
         document.addEventListener('click', function (event) {
+            console.log(event.target);
             thisController.handleEditTask(event.target);
         });
     }

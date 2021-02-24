@@ -50,6 +50,13 @@
     /*border: 3px;*/
     /*padding: 7px;*/
 }
+.list-item-card-header {
+    height: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    /*border: 3px;*/
+    /*padding: 7px;*/
+}
 
 .task-col {
     width:25%;

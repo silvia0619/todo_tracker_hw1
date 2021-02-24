@@ -59,8 +59,14 @@
     border-bottom: dotted;
 }
 
+.list-item-card-header {
+    border-bottom: solid;
+}
 .list-item-card {
     border-bottom: solid;
+}
+.list-item-card:hover {
+    background-color: var( --swatch-text);
 }
 
 .todo_button {
@@ -123,4 +129,11 @@
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+#incomplete {
+    color: #f5bc75;
+}
+#complete {
+    color: #8ed4f8;
 }
