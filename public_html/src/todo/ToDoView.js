@@ -55,6 +55,7 @@ export default class ToDoView {
         let itemsListDiv = document.getElementById("todo-list-items-div");
         // GET RID OF ALL THE ITEMS
         this.clearItemsList();
+        document.getElementById("add-list-button").style.visibility = 'hidden';
 
         for (let i = 0; i < list.items.length; i++) {
             // NOW BUILD ALL THE LIST ITEMS
@@ -108,6 +109,11 @@ export default class ToDoView {
         }
         let thisController = this.controller;
         //edit task!!
+        //for (let i = 0; i < list.items.length; i++) {
+        //    document.getElementsById("todo-list-item-" + list.items[i]).addEventListener('click', function (event) {
+        //        thisController.handleEditTask(event.target);
+        //    })
+        //}
         document.addEventListener('click', function (event) {
             console.log(event.target);
             thisController.handleEditTask(event.target);

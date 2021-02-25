@@ -60,13 +60,15 @@
 }
 
 .list-item-card-header {
-    border-bottom: solid;
+    border-bottom: dotted;
 }
 .list-item-card {
     border-bottom: solid;
 }
 .list-item-card:hover {
     background-color: var( --swatch-text);
+    background:  rgba(255,255,255, 0.7);
+    transition: 0.1s ease-in-out;
 }
 
 .todo_button {
@@ -79,7 +81,7 @@
 }
 
 .todo_button:hover {
-    background-color: var(--swatch-contrast);
+    background: rgba(255,255,255, 0.7);
 }
 
 /* The Modal (background) */

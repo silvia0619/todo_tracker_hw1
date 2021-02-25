@@ -4,6 +4,7 @@ import ToDoList from './ToDoList.js'
 import ToDoListItem from './ToDoListItem.js'
 import jsTPS from '../common/jsTPS.js'
 import AddNewItem_Transaction from './transactions/AddNewItem_Transaction.js'
+import ChangeTase_Transaction from './transactions/ChangeTask_Transaction.js'
 
 /**
  * ToDoModel
@@ -65,7 +66,7 @@ export default class ToDoModel {
             this.view.refreshList(list);
         }
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * setModelDescription(theId, newTask)
      */
@@ -103,25 +104,27 @@ export default class ToDoModel {
      * handleRemoveItem(theId)
      */
     handleRemoveItem(theId) {
+        var removeItem;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
-                console.log("did it find????", this.currentList.items[i]);
-                this.removeItem(this.currentList.items[i]);
+                removeItem = this.currentList.items[i]
+                this.removeItem(removeItem);
             }
         }
+        return removeItem;
     }
 
     /**DOES NOT WORK PROPERLY
      * moveUpItem(theId)
      */
     moveUpItem(theId) {
-        var theIndex; 
+        var theIndex;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
                 theIndex = i;
             }
         }
-        if(theIndex > 0){
+        if (theIndex > 0) {
             this.currentList.items.splice(theIndex - 1, 2, this.currentList.items[theIndex], this.currentList.items[theIndex - 1]);
             console.log(this.currentList.items);
             this.view.viewList(this.currentList);
@@ -132,18 +135,20 @@ export default class ToDoModel {
      * moveDownItem(theId)
      */
     moveDownItem(theId) {
-        var theIndex; 
+        var theIndex;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
                 theIndex = i;
             }
         }
-        if(theIndex < this.currentList.items.length){
+        if (theIndex < this.currentList.items.length) {
             this.currentList.items.splice(theIndex, 2, this.currentList.items[theIndex + 1], this.currentList.items[theIndex]);
             console.log(this.currentList.items);
             this.view.viewList(this.currentList);
         }
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * addNewItemTransaction
@@ -154,6 +159,23 @@ export default class ToDoModel {
         let transaction = new AddNewItem_Transaction(this);
         this.tps.addTransaction(transaction);
     }
+
+    /**
+     * changeTaskTransaction
+     * 
+     * Creates a new transaction for changing a task and adds it to the transaction stack.
+     */
+    changeTaskTransaction(theId, newTask) {
+        let transaction = new ChangeTase_Transaction(this, theId, newTask);
+        this.tps.addTransaction(transaction);
+    }
+
+    deleteItemTransaction() {
+        let transaction = new DeleteAnItem_Transaction(this, theId);
+        this.tps.addTransaction(transaction);
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * addNewList
@@ -213,10 +235,9 @@ export default class ToDoModel {
         var selectedList = this.toDoLists[listIndex];
         this.toDoLists.splice(listIndex, 1);
         this.toDoLists.unshift(selectedList);
-        //for (let i = 0; i < this.toDoLists.length; i++) {
-        //    this.toDoLists[i].id = i;
-        //}
         this.view.refreshLists(this.toDoLists);
+        document.getElementById("todo-list-" + listId).setAttribute("class", "highlight");
+        //document.getElementById("todo-list-" + listId).style.backgroundColor = "#f5bc75";
     }
 
     /**
@@ -241,6 +262,7 @@ export default class ToDoModel {
      */
     removeCurrentList() {
         const handleDelete = async () => {
+            document.getElementById("add-list-button").style.visibility = 'visible';
             let indexOfList = -1;
             for (let i = 0; (i < this.toDoLists.length) && (indexOfList < 0); i++) {
                 if (this.toDoLists[i].id === this.currentList.id) {

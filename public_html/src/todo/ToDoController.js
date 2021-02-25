@@ -37,7 +37,6 @@ export default class ToDoController {
         this.model.loadList(listId);
 
     }
-
     handleEditTask(theTarget) {
         var theModel = this.model;
         const pureId = theTarget.parentNode.id.split('-').pop();
@@ -48,6 +47,7 @@ export default class ToDoController {
             taskBox.setAttribute("class", "task-inputbox");
             taskBox.type = "text";
             taskBox.value = theTarget.innerHTML;
+            var oldTask = theTarget.innerHTML;
 
             //replace 
             theTarget.replaceWith(taskBox);
@@ -59,7 +59,8 @@ export default class ToDoController {
                     taskBox.replaceWith(theTarget);
 
                     //set
-                    theModel.setModelDescription(pureId, taskBox.value);
+                    theModel.changeTaskTransaction(pureId, taskBox.value, oldTask);
+                    //theModel.setModelDescription(pureId, taskBox.value);
                 }
             });
         }
