@@ -4,22 +4,20 @@
 import { jsTPS_Transaction } from "../../common/jsTPS.js"
 
 // THIS TRANSACTION IS FOR ADDING A NEW ITEM TO A TODO LIST
-export default class ChangeTase_Transaction extends jsTPS_Transaction {
-    constructor(initModel, theId, newTask, oldTask) {
+export default class ChangeTask_Transaction extends jsTPS_Transaction {
+    constructor(initModel, theId, newTask) {
         super();
         this.model = initModel;
         this.theId = theId;
         this.newTask = newTask;
-        this.oldTask = oldTask;
     }
 
     doTransaction() {
-        // MAKE A NEW ITEM
-        //this.itemAdded = this.model.addNewItem();
-        this.model.setModelDescription(this.theId, this.newTask);
+        this.oldTask = this.model.setModelDescription(this.theId, this.newTask);
     }
 
     undoTransaction() {
+        console.log("undo clicked with oldTask", this.oldTask);
         this.model.setModelDescription(this.theId, this.oldTask);
     }
 }

@@ -4,7 +4,12 @@ import ToDoList from './ToDoList.js'
 import ToDoListItem from './ToDoListItem.js'
 import jsTPS from '../common/jsTPS.js'
 import AddNewItem_Transaction from './transactions/AddNewItem_Transaction.js'
-import ChangeTase_Transaction from './transactions/ChangeTask_Transaction.js'
+import ChangeTask_Transaction from './transactions/ChangeTask_Transaction.js'
+import ChangeDueDate_Transaction from './transactions/ChangeDueDate_Transaction.js'
+import ChangeStatus_Transaction from './transactions/ChangeStatus_Transaction.js'
+import DeleteAnItem_Transaction from './transactions/DeleteAnItem_Transaction.js'
+import MoveAnItemUp_Transaction from './transactions/MoveAnItemUp_Transaction.js'
+import MoveAnItemDown_Transaction from './transactions/MoveAnItemDown_Transaction.js'
 
 /**
  * ToDoModel
@@ -36,8 +41,12 @@ export default class ToDoModel {
      * 
      * @param {*} itemToAdd A instantiated item to add to the list.
      */
-    addItemToCurrentList(itemToAdd) {
-        this.currentList.push(itemToAdd);
+    addItemToCurrentList(index, itemToAdd) {
+        //this.currentList.push(itemToAdd);
+        
+        console.log("undo called");
+        this.currentList.items.splice(index, 0, itemToAdd);
+        this.view.viewList(this.currentList);
     }
 
     /**
@@ -71,33 +80,45 @@ export default class ToDoModel {
      * setModelDescription(theId, newTask)
      */
     setModelDescription(theId, newTask) {
+        let theOldTask;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
+                theOldTask = this.currentList.items[i].description;
                 this.currentList.items[i].setDescription(newTask);
             }
         }
+        this.view.viewList(this.currentList);
+        return theOldTask;
     }
 
     /**
      * setModelDueDate(theId, newDueDate)
      */
     setModelDueDate(theId, newDueDate) {
+        let theOldDate;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
+                theOldDate = this.currentList.items[i].dueDate;
                 this.currentList.items[i].setDueDate(newDueDate);
             }
         }
+        this.view.viewList(this.currentList);
+        return theOldDate;
     }
 
     /**
      * setModelStatus(theId, newStatus)
      */
     setModelStatus(theId, newStatus) {
+        let theOldStatus;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
+                theOldStatus = this.currentList.items[i].status;
                 this.currentList.items[i].setStatus(newStatus);
             }
         }
+        this.view.viewList(this.currentList);
+        return theOldStatus;
     }
 
     /**
@@ -105,13 +126,15 @@ export default class ToDoModel {
      */
     handleRemoveItem(theId) {
         var removeItem;
+        var index;
         for (var i = 0; i < this.currentList.items.length; i++) {
             if (this.currentList.items[i].id == theId) {
-                removeItem = this.currentList.items[i]
+                removeItem = this.currentList.items[i];
+                index = i;
                 this.removeItem(removeItem);
             }
         }
-        return removeItem;
+        return [removeItem, index];
     }
 
     /**DOES NOT WORK PROPERLY
@@ -166,12 +189,33 @@ export default class ToDoModel {
      * Creates a new transaction for changing a task and adds it to the transaction stack.
      */
     changeTaskTransaction(theId, newTask) {
-        let transaction = new ChangeTase_Transaction(this, theId, newTask);
+        let transaction = new ChangeTask_Transaction(this, theId, newTask);
         this.tps.addTransaction(transaction);
     }
 
-    deleteItemTransaction() {
+    changeDueDateTransaction(theId, newDate) {
+        let transaction = new ChangeDueDate_Transaction(this, theId, newDate);
+        this.tps.addTransaction(transaction);
+    }
+
+    changeStatusTransaction(theId, newStatus) {
+        let transaction = new ChangeStatus_Transaction(this, theId, newStatus);
+        this.tps.addTransaction(transaction);
+    }
+
+
+    deleteItemTransaction(theId) {
         let transaction = new DeleteAnItem_Transaction(this, theId);
+        this.tps.addTransaction(transaction);
+    }
+
+    moveUpItemTransaction(theId) {
+        let transaction = new MoveAnItemUp_Transaction(this, theId);
+        this.tps.addTransaction(transaction);
+    }
+
+    moveDownItemTransaction(theId) {
+        let transaction = new MoveAnItemDown_Transaction(this, theId);
         this.tps.addTransaction(transaction);
     }
 

@@ -13,10 +13,13 @@ export default class DeleteAnItem_Transaction extends jsTPS_Transaction {
 
     doTransaction() {
         // MAKE A NEW ITEM
-        this.itemRemoved = this.model.handleRemoveItem(theId);
+        var returnVals = this.model.handleRemoveItem(this.id);
+        this.removedItem = returnVals[0];
+        this.index = returnVals[1];
+        console.log(this.index);
     }
 
     undoTransaction() {
-        this.model.removeItem(this.itemAdded.id);
+        this.model.addItemToCurrentList(this.index, this.removedItem);
     }
 }

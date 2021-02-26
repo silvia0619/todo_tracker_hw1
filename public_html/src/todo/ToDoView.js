@@ -60,12 +60,14 @@ export default class ToDoView {
         for (let i = 0; i < list.items.length; i++) {
             // NOW BUILD ALL THE LIST ITEMS
             let listItem = list.items[i];
+            //add color to the status
             var coloredStatus;
             if(listItem.status == "incomplete"){
                 coloredStatus = "<div class='status-col' id='incomplete'>" + listItem.status + "</div>"
             }else{
                 coloredStatus = "<div class='status-col' id='complete'>" + listItem.status + "</div>"
             }
+            //remove move up and down button for the first and last element
             let listItemElement = "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
                 + "<div class='task-col'>" + listItem.description + "</div>"
                 + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
@@ -109,15 +111,23 @@ export default class ToDoView {
         }
         let thisController = this.controller;
         //edit task!!
-        //for (let i = 0; i < list.items.length; i++) {
-        //    document.getElementsById("todo-list-item-" + list.items[i]).addEventListener('click', function (event) {
-        //        thisController.handleEditTask(event.target);
-        //    })
-        //}
-        document.addEventListener('click', function (event) {
-            console.log(event.target);
-            thisController.handleEditTask(event.target);
-        });
+        for (let i = 0; i < list.items.length; i++) {
+            document.getElementById("todo-list-item-" + list.items[i].id).addEventListener('click', function (event) {
+                if(event.target.className == "task-col") {
+                    thisController.handleEditTask(event.target);
+                }else if(event.target.className == "due-date-col"){
+                    thisController.handleEditDueDate(event.target);
+                }else if(event.target.className == "status-col"){
+                    thisController.handleEditStatus(event.target);
+                }else if(event.target.className == "list-item-control material-icons"){
+                    thisController.handleItemButtons(event.target);
+                }
+            })
+        }
+        //document.addEventListener('click', function (event) {
+        //    console.log(event.target);
+        //    thisController.handleEditTask(event.target);
+        //});
     }
 
 
