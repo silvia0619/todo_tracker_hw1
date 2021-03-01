@@ -17,7 +17,6 @@ export default class ChangeDueDate_Transaction extends jsTPS_Transaction {
     }
 
     undoTransaction() {
-        console.log("undo clicked with oldDate", this.oldDate);
         this.model.setModelDueDate(this.theId, this.oldDate);
     }
 }

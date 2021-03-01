@@ -43,7 +43,7 @@ export default class ToDoModel {
      */
     addItemToCurrentList(index, itemToAdd) {
         //this.currentList.push(itemToAdd);
-        
+
         console.log("undo called");
         this.currentList.items.splice(index, 0, itemToAdd);
         this.view.viewList(this.currentList);
@@ -75,6 +75,9 @@ export default class ToDoModel {
             this.view.refreshList(list);
         }
     }
+
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * setModelDescription(theId, newTask)
@@ -171,8 +174,25 @@ export default class ToDoModel {
         }
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    buttonVisibility() {
+        console.log("undo size:", this.tps.getUndoSize(), "redo size: ", this.tps.getRedoSize(), "size: ",this.tps.getSize());
+        if (this.tps.hasTransactionToUndo()) {
+            document.getElementById("undo-button").style.visibility = 'visible';
+        }else{
+            document.getElementById("undo-button").style.visibility = 'hidden';
+        }
+        if (this.tps.hasTransactionToRedo()) {
+            document.getElementById("redo-button").style.visibility = 'visible';
+        }else{
+            document.getElementById("redo-button").style.visibility = 'hidden';
+        }
+    }
+
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * addNewItemTransaction
      * 
@@ -181,6 +201,7 @@ export default class ToDoModel {
     addNewItemTransaction() {
         let transaction = new AddNewItem_Transaction(this);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
     /**
@@ -191,35 +212,43 @@ export default class ToDoModel {
     changeTaskTransaction(theId, newTask) {
         let transaction = new ChangeTask_Transaction(this, theId, newTask);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
     changeDueDateTransaction(theId, newDate) {
         let transaction = new ChangeDueDate_Transaction(this, theId, newDate);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
     changeStatusTransaction(theId, newStatus) {
         let transaction = new ChangeStatus_Transaction(this, theId, newStatus);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
 
     deleteItemTransaction(theId) {
         let transaction = new DeleteAnItem_Transaction(this, theId);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
     moveUpItemTransaction(theId) {
         let transaction = new MoveAnItemUp_Transaction(this, theId);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
     moveDownItemTransaction(theId) {
         let transaction = new MoveAnItemDown_Transaction(this, theId);
         this.tps.addTransaction(transaction);
+        this.buttonVisibility();
     }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * addNewList
@@ -260,12 +289,11 @@ export default class ToDoModel {
         this.addItemToList(list, newItem);
     }
 
-
-
     /**
      * Load the items for the listId list into the UI.
      */
     loadList(listId) {
+        this.tps.clearAllTransactions();
         let listIndex = -1;
         for (let i = 0; (i < this.toDoLists.length) && (listIndex < 0); i++) {
             if (this.toDoLists[i].id === listId)
@@ -281,7 +309,6 @@ export default class ToDoModel {
         this.toDoLists.unshift(selectedList);
         this.view.refreshLists(this.toDoLists);
         document.getElementById("todo-list-" + listId).setAttribute("class", "highlight");
-        //document.getElementById("todo-list-" + listId).style.backgroundColor = "#f5bc75";
     }
 
     /**
@@ -291,6 +318,7 @@ export default class ToDoModel {
         if (this.tps.hasTransactionToRedo()) {
             this.tps.doTransaction();
         }
+        this.buttonVisibility();
     }
 
     /**
@@ -322,6 +350,7 @@ export default class ToDoModel {
             this.view.refreshLists(this.toDoLists);
             modal.style.display = "none";
             console.log("this.toDoLists", this.toDoLists);
+            this.tps.clearAllTransactions();
         }
 
         var modal = document.getElementById("myModal");
@@ -374,5 +403,6 @@ export default class ToDoModel {
         if (this.tps.hasTransactionToUndo()) {
             this.tps.undoTransaction();
         }
+        this.buttonVisibility();
     }
 }

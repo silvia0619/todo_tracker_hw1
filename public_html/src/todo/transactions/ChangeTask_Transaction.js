@@ -17,7 +17,6 @@ export default class ChangeTask_Transaction extends jsTPS_Transaction {
     }
 
     undoTransaction() {
-        console.log("undo clicked with oldTask", this.oldTask);
         this.model.setModelDescription(this.theId, this.oldTask);
     }
 }

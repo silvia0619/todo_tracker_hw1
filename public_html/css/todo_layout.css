@@ -1,16 +1,20 @@
+body {
+    margin: 0;
+}
 #grid-container {
     position:absolute;
-    width:100%;
-    height:100%;
+    width:99%;
+    height:99%;
     display: grid;
-    padding: 1px;
+    padding: 0.5%;
     grid-template-rows: 5% 95%;
-    grid-template-columns: 12% 88%;
+    grid-template-columns: 15% 85%;
 }
 
 #navbar {
     grid-column: 1 / span 2;
     grid-row: 1 / span 1;
+    margin-bottom: 0.5%;
 }
 
 #left-sidebar {
@@ -21,6 +25,7 @@
 #left-sidebar-header {
     display: grid;
     grid-template-columns: 60% 40%;
+    height: 8%;
 }
 
 #left-sidebar-header-text {
@@ -58,6 +63,7 @@
     /*border: 3px;*/
     /*padding: 7px;*/
 }
+
 .list-item-card-header {
     height: 1.5rem;
     display: flex;

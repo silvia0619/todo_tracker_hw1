@@ -17,7 +17,6 @@ export default class ChangeStatus_Transaction extends jsTPS_Transaction {
     }
 
     undoTransaction() {
-        console.log("undo clicked with oldStatus", this.oldStatus);
         this.model.setModelStatus(this.theId, this.oldStatus);
     }
 }

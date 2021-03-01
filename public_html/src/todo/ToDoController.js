@@ -48,8 +48,7 @@ export default class ToDoController {
         taskBox.type = "text";
         taskBox.value = theTarget.innerHTML;
 
-        //change the task 
-        taskBox.addEventListener("change", function () {
+        taskBox.addEventListener("focusout", function () {
             taskBox.replaceWith(theTarget);
 
             //set
@@ -57,9 +56,8 @@ export default class ToDoController {
         });
         
         //replace 
-        console.log("task-col clicked", theTarget, taskBox);
         theTarget.replaceWith(taskBox);
-
+        taskBox.focus();
     }
 
     handleEditDueDate(theTarget) {
@@ -72,8 +70,7 @@ export default class ToDoController {
         dueDateBox.value = theTarget.innerHTML;
 
         //change the due date 
-        dueDateBox.addEventListener("change", function () {
-            console.log("changed");
+        dueDateBox.addEventListener("focusout", function () {
             //theTarget.innerHTML = taskBox.value;
             dueDateBox.replaceWith(theTarget);
 
@@ -83,6 +80,7 @@ export default class ToDoController {
 
         //replace
         theTarget.replaceWith(dueDateBox);
+        dueDateBox.focus();
     }
     handleEditStatus(theTarget) {
         var theModel = this.model;
@@ -103,7 +101,7 @@ export default class ToDoController {
         selectBox.value = theTarget.innerHTML;
 
         //change the due date 
-        selectBox.addEventListener("change", function () {
+        selectBox.addEventListener("focusout", function () {
             if (selectBox.value == "incomplete") {
                 theTarget.setAttribute("id", "incomplete");
             } else {
@@ -117,6 +115,7 @@ export default class ToDoController {
 
         //replace
         theTarget.replaceWith(selectBox);
+        selectBox.focus();
     }
     handleItemButtons(theTarget) {
         var theModel = this.model;

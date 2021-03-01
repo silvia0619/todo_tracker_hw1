@@ -44,7 +44,7 @@
 #title-div {
     color: rgb(255,200,25);
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 18pt;
 }
 
 #left-sidebar-header {
@@ -62,9 +62,11 @@
 .list-item-card-header {
     border-bottom: dotted;
 }
+
 .list-item-card {
     border-bottom: solid;
 }
+
 .list-item-card:hover {
     background-color: var( --swatch-text);
     background:  rgba(255,255,255, 0.7);
@@ -75,6 +77,7 @@
     cursor:pointer;
     background-color: var(--swatch-complement);
 }
+
 .highlight {
     background-color: #ffc819;
     transition: 0.1s ease-in-out;
@@ -138,4 +141,10 @@
 }
 #complete {
     color: #8ed4f8;
+}
+#undo-button {
+    visibility: hidden;
+}
+#redo-button {
+    visibility: hidden;
 }
