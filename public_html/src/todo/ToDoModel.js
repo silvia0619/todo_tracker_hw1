@@ -178,20 +178,20 @@ export default class ToDoModel {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     buttonVisibility() {
-        console.log("undo size:", this.tps.getUndoSize(), "redo size: ", this.tps.getRedoSize(), "size: ",this.tps.getSize());
+        console.log("undo size:", this.tps.getUndoSize(), "redo size: ", this.tps.getRedoSize(), "size: ", this.tps.getSize());
         if (this.tps.hasTransactionToUndo()) {
             document.getElementById("undo-button").style.visibility = 'visible';
-        }else{
+        } else {
             document.getElementById("undo-button").style.visibility = 'hidden';
         }
         if (this.tps.hasTransactionToRedo()) {
             document.getElementById("redo-button").style.visibility = 'visible';
-        }else{
+        } else {
             document.getElementById("redo-button").style.visibility = 'hidden';
         }
     }
 
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * addNewItemTransaction
@@ -199,9 +199,11 @@ export default class ToDoModel {
      * Creates a new transaction for adding an item and adds it to the transaction stack.
      */
     addNewItemTransaction() {
-        let transaction = new AddNewItem_Transaction(this);
-        this.tps.addTransaction(transaction);
-        this.buttonVisibility();
+        if (this.currentList != null) {
+            let transaction = new AddNewItem_Transaction(this);
+            this.tps.addTransaction(transaction);
+            this.buttonVisibility();
+        }
     }
 
     /**
@@ -246,8 +248,8 @@ export default class ToDoModel {
         this.buttonVisibility();
     }
 
-    
-    
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -294,6 +296,7 @@ export default class ToDoModel {
      */
     loadList(listId) {
         this.tps.clearAllTransactions();
+        this.buttonVisibility();
         let listIndex = -1;
         for (let i = 0; (i < this.toDoLists.length) && (listIndex < 0); i++) {
             if (this.toDoLists[i].id === listId)
@@ -308,7 +311,7 @@ export default class ToDoModel {
         this.toDoLists.splice(listIndex, 1);
         this.toDoLists.unshift(selectedList);
         this.view.refreshLists(this.toDoLists);
-        document.getElementById("todo-list-" + listId).setAttribute("class", "highlight");
+        document.getElementById("todo-list-" + listId).setAttribute("class", "highlight todo-button");
     }
 
     /**
@@ -327,6 +330,21 @@ export default class ToDoModel {
     removeItem(itemToRemove) {
         this.currentList.removeItem(itemToRemove);
         this.view.viewList(this.currentList);
+    }
+
+    closeListItem() {
+        if (this.currentList != null) {
+            this.currentList = null;
+            this.view.clearItemsList();
+            this.view.refreshLists(this.toDoLists);
+
+            document.getElementById("add-item-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+            document.getElementById("delete-list-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+            document.getElementById("close-list-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+
+            this.tps.clearAllTransactions();
+            this.buttonVisibility();
+        }
     }
 
     /**
@@ -351,42 +369,48 @@ export default class ToDoModel {
             modal.style.display = "none";
             console.log("this.toDoLists", this.toDoLists);
             this.tps.clearAllTransactions();
+            this.buttonVisibility();
+            document.getElementById("add-item-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+            document.getElementById("delete-list-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+            document.getElementById("close-list-button").setAttribute("class", "list-item-control-h material-icons todo_button");
+
         }
+        if (this.currentList != null) {
+            var modal = document.getElementById("myModal");
 
-        var modal = document.getElementById("myModal");
+            // Get the button that opens the modal
+            var btn = document.getElementById("delete-list-button");
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("delete-list-button");
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+            var confirm = document.getElementById("confirm");
+            var cancel = document.getElementById("cancel");
 
-        var confirm = document.getElementById("confirm");
-        var cancel = document.getElementById("cancel");
+            // When the user clicks the button, open the modal 
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
 
-        // When the user clicks the button, open the modal 
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        confirm.onclick = function () {
-            handleDelete();
-        }
-
-        cancel.onclick = function () {
-            modal.style.display = "none";
-        }
-
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
                 modal.style.display = "none";
+            }
+
+            confirm.onclick = function () {
+                handleDelete();
+            }
+
+            cancel.onclick = function () {
+                modal.style.display = "none";
+            }
+
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
             }
         }
     }

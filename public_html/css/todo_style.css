@@ -19,6 +19,7 @@
 #grid-container {
     background-color: var(--swatch-foundation);
     font-family: var(--font-primary);
+    font-weight: 700;
 }
 
 .grid-item {
@@ -34,21 +35,28 @@
     color: rgb(233,237,240);
     overflow: auto;
     overflow-x: hidden;
+    font-size: 16px;
 }
 
 #workspace {
     background-color: var(--swatch-primary);
     color: rgb(233,237,240);
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 #title-div {
+    padding-left: 5px;
     color: rgb(255,200,25);
     font-weight: bold;
     font-size: 18pt;
 }
 
 #left-sidebar-header {
+    font-size: 19px;
+    padding-top: 20px;
     border-bottom: dotted;
+    height: 4.5%;
 }
 
 #todo-list-table-header {
@@ -65,26 +73,45 @@
 
 .list-item-card {
     border-bottom: solid;
+    border-bottom-width: thin;
+    padding-top: 10px;
 }
 
 .list-item-card:hover {
-    background-color: var( --swatch-text);
-    background:  rgba(255,255,255, 0.7);
-    transition: 0.1s ease-in-out;
+    background: rgba(255,255,255, 0.4);
 }
 
 .todo_button {
+    padding: 10px;
     cursor:pointer;
     background-color: var(--swatch-complement);
 }
 
-.highlight {
-    background-color: #ffc819;
-    transition: 0.1s ease-in-out;
+.todo_button:hover {
+    background: rgba(255,255,255, 0.4);
 }
 
-.todo_button:hover {
-    background: rgba(255,255,255, 0.7);
+#task-col-header {
+    padding-top: 20px;
+    background-color: var(--swatch-primary);
+}
+#date-col-header {
+    padding-top: 20px;
+    background-color: var(--swatch-primary);
+}
+#status-col-header {
+    padding-top: 20px;
+    background-color: var(--swatch-primary);
+}
+
+
+.highlight {
+    padding: 10px;
+    background-color: rgba(255,255,255, 0.7);
+    transition: 0.1s ease-in-out;
+}
+.material-icons {
+    padding:3px;
 }
 
 /* The Modal (background) */
@@ -148,3 +175,24 @@
 #redo-button {
     visibility: hidden;
 }
+
+.list-item-control-h {
+
+    background-color: var(--swatch-primary);
+    color: black;
+}
+.list-item-control-h:hover {
+    background-color: var(--swatch-primary);
+    cursor: context-menu;
+}
+
+
+.hidden-button {
+    visibility: hidden;
+}
+
+.list-item-control:hover {
+    background: rgba(255,255,255, 0.6);
+}
+
+

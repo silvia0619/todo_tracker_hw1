@@ -55,6 +55,7 @@ export default class ToDoView {
         let itemsListDiv = document.getElementById("todo-list-items-div");
         // GET RID OF ALL THE ITEMS
         this.clearItemsList();
+        
         document.getElementById("add-list-button").style.visibility = 'hidden';
 
         for (let i = 0; i < list.items.length; i++) {
@@ -110,6 +111,18 @@ export default class ToDoView {
             
         }
         let thisController = this.controller;
+        document.getElementById("add-item-button").setAttribute("class", "list-item-control material-icons todo_button");
+        document.getElementById("delete-list-button").setAttribute("class", "list-item-control material-icons todo_button");
+        document.getElementById("close-list-button").setAttribute("class", "list-item-control material-icons todo_button");
+        document.getElementById("add-item-button").onmousedown = function () {
+            thisController.addNewItemTransaction();
+        }
+        document.getElementById("delete-list-button").onmousedown = function () {
+            thisController.removeCurrentList();
+        }
+        document.getElementById("close-list-button").onmousedown = function () {
+            thisController.closeListItem();
+        }
         //edit task!!
         for (let i = 0; i < list.items.length; i++) {
             document.getElementById("todo-list-item-" + list.items[i].id).addEventListener('click', function (event) {

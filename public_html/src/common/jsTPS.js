@@ -197,8 +197,6 @@ export default class jsTPS {
         // TOP OF THE TPS STACK TOO
         this.mostRecentTransaction = -1;      
         this.numTransactions = 0; 
-        //document.getElementById("undo-button").style.visibility = 'hidden';
-        //document.getElementById("redo-button").style.visibility = 'hidden';
     }
 
     /**

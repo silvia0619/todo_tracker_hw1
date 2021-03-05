@@ -23,12 +23,17 @@ export default class ToDoController {
         document.getElementById("redo-button").onmousedown = function () {
             appModel.redo();
         }
-        document.getElementById("delete-list-button").onmousedown = function () {
-            appModel.removeCurrentList();
-        }
-        document.getElementById("add-item-button").onmousedown = function () {
-            appModel.addNewItemTransaction();
-        }
+        
+    }
+    
+    addNewItemTransaction(){
+        this.model.addNewItemTransaction();
+    }
+    removeCurrentList(){
+        this.model.removeCurrentList();
+    }
+    closeListItem() {
+        this.model.closeListItem();
     }
 
     // PROVIDES THE RESPONSE TO WHEN A USER CLICKS ON A LIST TO LOAD
